@@ -19,7 +19,6 @@ public class App {
 
         //TodoPanel
         toDoPanel = new JPanel();
-        toDoPanel.setBackground(Color.pink);
         Task firstTask = new Task();
         toDoPanel.add(firstTask);
 
