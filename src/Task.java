@@ -30,6 +30,14 @@ public class Task extends JPanel {
         this.add(button, BorderLayout.EAST);
     }
 
+    public void setName(String taskName){
+        name.setText(taskName);
+    }
+
+    public String getName(){
+        return name.getText();
+    }
+
     public boolean isDone(){
         return isDone;
     }

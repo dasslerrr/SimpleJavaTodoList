@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.ArrayList;
 
 public class App {
     JFrame frame;
@@ -9,6 +11,7 @@ public class App {
 
     JButton addButton;
     JButton clearButton;
+    JButton saveButton;
 
 
     public void run(){
@@ -36,6 +39,12 @@ public class App {
         clearButton.setPreferredSize(new Dimension(200, 40));
         nav.add(clearButton);
 
+        saveButton = new JButton("Save user profile");
+        saveButton.setBackground(Color.orange);
+        saveButton.addActionListener(new saveAction());
+        saveButton.setPreferredSize(new Dimension(200, 40));
+        nav.add(saveButton);
+
 
         //Set up frame
         frame.setJMenuBar(createMenuBar());
@@ -53,8 +62,9 @@ public class App {
     public JMenuBar createMenuBar(){
         JMenu menu = new JMenu("Menu");
         JMenuBar mb = new JMenuBar();
-        JMenuItem user = new JMenuItem("User");
+        JMenuItem user = new JMenuItem("Load User");
         JMenuItem backgroundChange = new JMenuItem("Change Background");
+        user.addActionListener(new LoadUserListener());
         menu.add(user);
         menu.add(backgroundChange);
         mb.add(menu);
@@ -81,6 +91,55 @@ public class App {
                 }
             }
             frame.repaint();
+        }
+    }
+
+    class LoadUserListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileOpen = new JFileChooser();
+            fileOpen.showOpenDialog(frame);
+            loadFile(fileOpen.getSelectedFile());
+        }
+    }
+
+    class saveAction implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileSave = new JFileChooser();
+            fileSave.showOpenDialog(frame);
+            saveFile(fileSave.getSelectedFile());
+        }
+    }
+
+    private void saveFile(File file){
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            for (Component item : toDoPanel.getComponents()){
+                if (item instanceof Task){
+                    writer.write(item.getName() + "\n");
+                }
+            }
+            writer.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void loadFile(File file){
+        ArrayList<String> tasks = new ArrayList<>();
+        try{
+            toDoPanel.removeAll();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                Task task = new Task();
+                task.setName(line);
+                toDoPanel.add(task);
+            }
+            frame.revalidate();
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 }
