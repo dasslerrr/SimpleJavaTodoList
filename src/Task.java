@@ -1,7 +1,11 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Task extends JPanel {
     private Color color;
@@ -57,6 +61,16 @@ public class Task extends JPanel {
             if (name.getBackground().equals(Color.LIGHT_GRAY)){
                 name.setBackground(Color.GREEN);
                 setDone();
+                try{
+                    File file = new File("src/Resources/audio1.wav");
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+                    clip.start();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+
             }
             else{
                 name.setBackground(Color.lightGray);
