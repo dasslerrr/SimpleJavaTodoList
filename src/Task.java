@@ -12,7 +12,7 @@ public class Task extends JPanel {
 
     public Task (){
         isDone = false;
-        setPreferredSize(new Dimension(400, 40));
+//        setPreferredSize(new Dimension(400, 40));
         setLayout(new BorderLayout());
 
         name = new JTextField("");
@@ -60,6 +60,7 @@ public class Task extends JPanel {
             }
             else{
                 name.setBackground(Color.lightGray);
+                setUndone();
             }
         }
     }
