@@ -99,7 +99,7 @@ public class App {
                     }
                 }
             }
-            frame.repaint();
+            frame.revalidate();
         }
     }
 
