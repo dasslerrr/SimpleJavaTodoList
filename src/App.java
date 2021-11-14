@@ -1,8 +1,12 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class App {
@@ -79,6 +83,8 @@ public class App {
             Task task = new Task();
             toDoPanel.add(task);
             task.getTextField().requestFocus();
+            //add some sound effect
+            playSound("audio2.wav");
             frame.revalidate();
         }
     }
@@ -142,6 +148,18 @@ public class App {
             }
             frame.revalidate();
         }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static void playSound(String pathName) {
+        try {
+            File file = new File(pathName);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

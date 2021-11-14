@@ -87,16 +87,7 @@ public class Task extends JPanel {
             if (name.getBackground().equals(Color.LIGHT_GRAY)){
                 name.setBackground(Color.GREEN);
                 setDone();
-                try{
-                    File file = new File("audio1.wav");
-                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-                    Clip clip = AudioSystem.getClip();
-                    clip.open(audioStream);
-                    clip.start();
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
-
+                App.playSound("audio1.wav");
             }
             else{
                 name.setBackground(Color.lightGray);
