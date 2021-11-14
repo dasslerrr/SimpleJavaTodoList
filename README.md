@@ -1,4 +1,4 @@
-# SimpleJavaTodoList
+# Simple Java TodoList
 This is just a trivial todo List for my personal use written in Java. Hope it could help someone else as well
 
 ![Capture](https://user-images.githubusercontent.com/75805648/141183693-8d047a9f-8ca4-4795-bbdb-7a40b4e88391.PNG)
