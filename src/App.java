@@ -84,7 +84,7 @@ public class App {
             toDoPanel.add(task);
             task.getTextField().requestFocus();
             //add some sound effect
-            playSound("audio2.wav");
+            playSound("src/Resources/audio2.wav");
             frame.revalidate();
         }
     }

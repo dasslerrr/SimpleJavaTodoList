@@ -87,7 +87,7 @@ public class Task extends JPanel {
             if (name.getBackground().equals(Color.LIGHT_GRAY)){
                 name.setBackground(Color.GREEN);
                 setDone();
-                App.playSound("audio1.wav");
+                App.playSound("src/Resources/audio1.wav");
             }
             else{
                 name.setBackground(Color.lightGray);
