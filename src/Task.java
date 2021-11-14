@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 public class Task extends JPanel {
@@ -24,6 +26,14 @@ public class Task extends JPanel {
         name.setPreferredSize(new Dimension(300, 40));
         name.setBackground(Color.LIGHT_GRAY);
         name.setHorizontalAlignment(JLabel.LEFT);
+        name.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    App.addButton.doClick();
+                }
+            }
+        });
         this.add(name, BorderLayout.CENTER);
 
         button = new JButton("Complete");
@@ -42,6 +52,8 @@ public class Task extends JPanel {
         return name.getText();
     }
 
+    public JTextField getTextField(){return name;}
+
     public boolean isDone(){
         return isDone;
     }
@@ -54,6 +66,20 @@ public class Task extends JPanel {
         isDone = false;
     }
 
+    class EnterListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            KeyAdapter adapter = new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                        button.doClick();
+                    }
+                }
+            };
+        }
+    }
+
     class buttonAction implements ActionListener{
 
         @Override
@@ -62,7 +88,7 @@ public class Task extends JPanel {
                 name.setBackground(Color.GREEN);
                 setDone();
                 try{
-                    File file = new File("src/Resources/audio1.wav");
+                    File file = new File("audio1.wav");
                     AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
                     Clip clip = AudioSystem.getClip();
                     clip.open(audioStream);

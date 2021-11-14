@@ -9,7 +9,7 @@ public class App {
     JFrame frame;
     JPanel toDoPanel;
 
-    JButton addButton;
+    public static JButton addButton;
     JButton clearButton;
     JButton saveButton;
 
@@ -24,6 +24,8 @@ public class App {
         toDoPanel = new JPanel();
         Task firstTask = new Task();
         toDoPanel.add(firstTask);
+
+
 
         //Navigation
         Navigation nav = new Navigation();
@@ -76,6 +78,7 @@ public class App {
         public void actionPerformed(ActionEvent e) {
             Task task = new Task();
             toDoPanel.add(task);
+            task.getTextField().requestFocus();
             frame.revalidate();
         }
     }
