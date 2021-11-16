@@ -1,17 +1,19 @@
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class App {
     JFrame frame;
-    JPanel toDoPanel;
+    public static JPanel toDoPanel;
 
     public static JButton addButton;
     JButton clearButton;
@@ -58,6 +60,7 @@ public class App {
         frame.add(BorderLayout.CENTER, toDoPanel);
         frame.add(BorderLayout.SOUTH, nav);
         frame.setSize(500, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
@@ -84,7 +87,7 @@ public class App {
             toDoPanel.add(task);
             task.getTextField().requestFocus();
             //add some sound effect
-            playSound("src/Resources/audio2.wav");
+            playSound("res/audio2.wav");
             frame.revalidate();
         }
     }
@@ -99,6 +102,7 @@ public class App {
                     }
                 }
             }
+            frame.repaint();
             frame.revalidate();
         }
     }
@@ -154,11 +158,17 @@ public class App {
 
     public static void playSound(String pathName) {
         try {
+
             File file = new File(pathName);
+//
+//            InputStream bufferedIn = new BufferedInputStream(path);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

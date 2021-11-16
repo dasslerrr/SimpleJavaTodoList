@@ -1,25 +1,22 @@
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 public class Task extends JPanel {
     private Color color;
     private JCheckBox checkBox;
     private JTextField name;
-    private JButton button;
+    private JButton addButton;
+    private JButton deleteButton;
     private boolean isDone;
 
     public Task (){
         isDone = false;
-//        setPreferredSize(new Dimension(400, 40));
-        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(440, 40));
+//        setLayout(new BorderLayout());
 
         name = new JTextField("");
         name.setBorder(BorderFactory.createEmptyBorder());
@@ -34,14 +31,21 @@ public class Task extends JPanel {
                 }
             }
         });
-        this.add(name, BorderLayout.CENTER);
+        this.add(name);
 
-        button = new JButton("Complete");
-        button.setPreferredSize(new Dimension(60, 40));
-        button.setBorder(BorderFactory.createEmptyBorder());
-        button.setBackground(Color.cyan);
-        button.addActionListener(new buttonAction());
-        this.add(button, BorderLayout.EAST);
+        addButton = new JButton("Done");
+        addButton.setPreferredSize(new Dimension(60, 40));
+        addButton.setBorder(BorderFactory.createEmptyBorder());
+        addButton.setBackground(Color.cyan);
+        addButton.addActionListener(new addButtonAction());
+        this.add(addButton);
+
+        deleteButton = new JButton("Delete");
+        deleteButton.setPreferredSize(new Dimension(60, 40));
+        deleteButton.setBorder(BorderFactory.createEmptyBorder());
+        deleteButton.setBackground(Color.cyan);
+        deleteButton.addActionListener(new deleteButtonAction());
+        this.add(deleteButton);
     }
 
     public void setName(String taskName){
@@ -66,33 +70,30 @@ public class Task extends JPanel {
         isDone = false;
     }
 
-    class EnterListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            KeyAdapter adapter = new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                        button.doClick();
-                    }
-                }
-            };
-        }
-    }
-
-    class buttonAction implements ActionListener{
+    class addButtonAction implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (name.getBackground().equals(Color.LIGHT_GRAY)){
                 name.setBackground(Color.GREEN);
                 setDone();
-                App.playSound("src/Resources/audio1.wav");
+                App.playSound("res/audio1.wav");
             }
             else{
                 name.setBackground(Color.lightGray);
                 setUndone();
             }
+        }
+    }
+
+    class deleteButtonAction implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton obj = (JButton) e.getSource();
+//            System.out.println(obj.getParent().toString());
+            App.toDoPanel.remove(obj.getParent());
+            App.toDoPanel.repaint();
+            App.toDoPanel.revalidate();
         }
     }
 }
