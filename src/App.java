@@ -1,14 +1,11 @@
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class App {
@@ -31,8 +28,6 @@ public class App {
         Task firstTask = new Task();
         toDoPanel.add(firstTask);
 
-
-
         //Navigation
         Navigation nav = new Navigation();
         addButton = new JButton("Add new Task");
@@ -46,12 +41,6 @@ public class App {
         clearButton.addActionListener(new ClearAction());
         clearButton.setPreferredSize(new Dimension(200, 40));
         nav.add(clearButton);
-
-        saveButton = new JButton("Save user profile");
-        saveButton.setBackground(Color.orange);
-        saveButton.addActionListener(new saveAction());
-        saveButton.setPreferredSize(new Dimension(200, 40));
-        nav.add(saveButton);
 
 
         //Set up frame
@@ -71,11 +60,12 @@ public class App {
     public JMenuBar createMenuBar(){
         JMenu menu = new JMenu("Menu");
         JMenuBar mb = new JMenuBar();
-        JMenuItem user = new JMenuItem("Load User");
-        JMenuItem backgroundChange = new JMenuItem("Change Background");
-        user.addActionListener(new LoadUserListener());
-        menu.add(user);
-        menu.add(backgroundChange);
+        JMenuItem loadProfile = new JMenuItem("Open Profile");
+        JMenuItem saveProfile = new JMenuItem("Save Profile");
+        loadProfile.addActionListener(new LoadUserListener());
+        saveProfile.addActionListener(new saveAction());
+        menu.add(loadProfile);
+        menu.add(saveProfile);
         mb.add(menu);
         return mb;
     }

@@ -31,6 +31,7 @@ public class Task extends JPanel {
                 }
             }
         });
+        name.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
         this.add(name);
 
         addButton = new JButton("Done");
