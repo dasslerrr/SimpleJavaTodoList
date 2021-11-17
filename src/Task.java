@@ -95,6 +95,7 @@ public class Task extends JPanel {
             App.toDoPanel.remove(obj.getParent());
             App.toDoPanel.repaint();
             App.toDoPanel.revalidate();
+            App.playSound("res/audio3.wav");
         }
     }
 }

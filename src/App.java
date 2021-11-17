@@ -92,6 +92,7 @@ public class App {
                     }
                 }
             }
+            playSound("res/audio3.wav");
             frame.repaint();
             frame.revalidate();
         }
