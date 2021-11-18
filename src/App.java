@@ -42,6 +42,11 @@ public class App {
         clearButton.setPreferredSize(new Dimension(200, 40));
         nav.add(clearButton);
 
+        JLabel quote = new JLabel("This should be where i place the quote");
+        quote.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        quote.setPreferredSize(new Dimension(400, 40));
+        quote.setHorizontalAlignment(JLabel.CENTER);
+        nav.add(quote);
 
         //Set up frame
         frame.setJMenuBar(createMenuBar());
