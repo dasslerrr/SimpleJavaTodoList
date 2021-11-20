@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -6,7 +8,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.List;
 
 public class App {
     JFrame frame;
@@ -14,7 +22,8 @@ public class App {
 
     public static JButton addButton;
     JButton clearButton;
-    JButton saveButton;
+
+    List<String> quotes = new ArrayList<>();
 
 
     public void run(){
@@ -42,10 +51,14 @@ public class App {
         clearButton.setPreferredSize(new Dimension(200, 40));
         nav.add(clearButton);
 
-        JLabel quote = new JLabel("This should be where i place the quote");
-        quote.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
-        quote.setPreferredSize(new Dimension(400, 40));
-        quote.setHorizontalAlignment(JLabel.CENTER);
+        quotes = getQuotes("res/quote.txt");
+        Random r = new Random();
+        int i = r.nextInt(quotes.size());
+        JTextField quote = new JTextField(quotes.get(i));
+        quote.setBackground(Color.PINK);
+        quote.setFont(new Font(Font.DIALOG, Font.ITALIC, 14));
+        quote.setPreferredSize(new Dimension(450, 40));
+        quote.setHorizontalAlignment(SwingConstants.CENTER);
         nav.add(quote);
 
         //Set up frame
@@ -60,6 +73,29 @@ public class App {
 
     public static void main(String[] args) {
         new App().run();
+    }
+
+
+    public static @NotNull
+    List<String> getQuotes(String pathName){
+        List<String> answer = new ArrayList<>();
+        try{
+            File file = new File(pathName);
+            String line;
+            line = new String(Files.readAllBytes(Paths.get(pathName)));
+            int i = 0;
+            line = line.replace("\n", "").replace("\r", "");
+
+
+            Pattern p = Pattern.compile("\"([^\"]*)\"");
+            Matcher m = p.matcher(line);
+            while (m.find()) {
+                answer.add(m.group(1));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return answer;
     }
 
     public JMenuBar createMenuBar(){
