@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 import java.util.List;
 
 public class App {
-    JFrame frame;
+    public static JFrame frame;
     public static JPanel toDoPanel;
 
     public static JButton addButton;
@@ -62,6 +62,7 @@ public class App {
         nav.add(quote);
 
         //Set up frame
+        loadFile(new File("Habit.txt"));
         frame.setJMenuBar(createMenuBar());
         frame.add(BorderLayout.NORTH, new TopPanel());
         frame.add(BorderLayout.CENTER, toDoPanel);

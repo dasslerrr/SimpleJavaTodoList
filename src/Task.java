@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class Task extends JPanel {
     private Color color;
@@ -12,11 +9,14 @@ public class Task extends JPanel {
     private JButton addButton;
     private JButton deleteButton;
     private boolean isDone;
+    Point prevPt;
+    Point imageCorner;
 
     public Task (){
         isDone = false;
         setPreferredSize(new Dimension(440, 40));
-//        setLayout(new BorderLayout());
+
+        imageCorner = new Point(0, 0);
 
         name = new JTextField("");
         name.setBorder(BorderFactory.createEmptyBorder());
@@ -47,6 +47,9 @@ public class Task extends JPanel {
         deleteButton.setBackground(Color.cyan);
         deleteButton.addActionListener(new deleteButtonAction());
         this.add(deleteButton);
+
+        this.addMouseListener(new ClickListener());
+        this.addMouseMotionListener(new DragListener());
     }
 
     public void setName(String taskName){
@@ -96,6 +99,25 @@ public class Task extends JPanel {
             App.toDoPanel.repaint();
             App.toDoPanel.revalidate();
             App.playSound("res/audio3.wav");
+        }
+    }
+
+    class ClickListener extends MouseAdapter{
+        @Override
+        public void mousePressed(MouseEvent e) {
+            prevPt = e.getPoint();
+        }
+    }
+
+    class DragListener extends MouseMotionAdapter{
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            Point currentPoint = e.getPoint();
+            imageCorner.translate((int) (currentPoint.getX() - prevPt.getX()), (int) (currentPoint.getY() - prevPt.getY()));
+            prevPt = currentPoint;
+            App.frame.repaint();
+            App.frame.revalidate();
+
         }
     }
 }
